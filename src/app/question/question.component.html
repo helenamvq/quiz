@@ -1,0 +1,35 @@
+<div *ngIf="!quizStarted" class="home-box">
+  <p style="font-size: 18px;">Bem vindo ao Meu Quiz!</p>
+  <button (click)="startQuiz()" id="botao">Começar Quiz</button>
+</div>
+
+<div class="quiz-box" *ngIf="quizStarted && !reachedLastQuestion">
+  <h2>{{ questions[questionIndex].question }}</h2>
+  <ul>
+    <li *ngFor="let option of questions[questionIndex].options">
+      <label>
+        <input type="radio" name="answer" [value]="option" [disabled]="isAnswerSubmitted">{{ option }}
+      </label>
+    </li>
+  </ul>
+  <button (click)="submitAnswer()" [disabled]="isAnswerSubmitted">Responder</button>
+</div>
+
+<div class="placar-box" *ngIf="reachedLastQuestion">
+  <h2>Seu placar: {{ score }} / {{ totalQuestions }}</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Pergunta</th>
+        <th>Resposta Correta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let answer of wrongAnswers">
+        <td>{{ answer.question }}</td>
+        <td>{{ answer.correctAnswer }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button id="btn" (click)="restartQuiz()">Reiniciar</button>
+</div>
